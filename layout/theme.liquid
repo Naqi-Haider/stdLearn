@@ -322,6 +322,8 @@
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+
+    {% render 'tuto' %}
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
@@ -333,6 +335,11 @@
     {% sections 'header-group' %}
 
     <h2> Hello from zed. </h2>
+
+    <prev>
+        product.title: {{ product.title }}
+        collection.title: {{  collection.title }}
+    </prev>
 
     <main
       id="MainContent"
