@@ -537,6 +537,14 @@
                       </p>
                     </div>
                   {%- endif -%}
+                {% when 'material' %}
+                  {% if product.metafields.custom_material != blank %}
+                    <div>
+                        <p>
+                            <strong> Material: {{product.metafields.custom.material}} </strong>
+                        </p>
+                    </div>
+                  {% endif %}
                 {%- when 'complementary' -%}
                   <product-recommendations
                     class="complementary-products quick-add-hidden{% if block.settings.make_collapsible_row %} is-accordion{% endif %}{% if block.settings.enable_quick_add %} complementary-products-contains-quick-add{% endif %}"
@@ -761,6 +769,10 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+        "type": "material",
+        "name": "Material",
     },
     {
       "type": "text",

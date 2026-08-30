@@ -27,6 +27,10 @@
           "type": "price",
           "settings": {}
         },
+        "material_crqHQJ": {
+          "type": "material",
+          "settings": {}
+        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -60,6 +64,7 @@
         "vendor",
         "title",
         "price",
+        "material_crqHQJ",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
@@ -85,6 +90,10 @@
     "disclosures": {
       "type": "disclosures",
       "settings": {
+        "heading": "Disclosures",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 0
       }

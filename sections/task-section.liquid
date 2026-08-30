@@ -1,0 +1,270 @@
+{% style %}
+    .task-section-class{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    @media screen and (min-width: 768px){
+        .task-section-class{
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .task-section-class > div{
+            flex: 1;
+        }
+    }
+
+    .image-section-class{
+        position: relative;
+        width: 100%;
+        display: flex;
+    }
+
+    .image-section-class img.main-image{
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .logo{
+        position: absolute;
+        width: 90px;
+        height: auto;
+        z-index: 2;
+    }
+
+    .pos-top-left{
+        top: 15px;
+        left: 15px;
+    }
+    .pos-top-right{
+        top: 15px;
+        right: 15px;
+    }
+    .pos-bottom-right{
+        bottom: 15px;
+        right: 15px;
+    }
+    .pos-bottom-left{
+        bottom: 15px;
+        left: 15px;
+    }
+
+    .text-content{
+        text-align: center;
+        padding: 1rem;
+    }
+
+    @media screen and (min-width: 768px){
+        .text-content{
+            text-align: left;
+        }
+    }
+
+    .doctor-name {
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .main-heading {
+        font-size: 2.2em;
+        font-weight: 900;
+        margin: 0;
+        color: #111;
+    }
+
+    .action-button {
+        display: inline-block;
+        background-color: #111;
+        color: #ffffff !important; /* Forces text to be white, overriding any theme defaults */
+        padding: 12px 32px;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        margin-top: 1rem;
+        font-size: 16px; /* Ensures the font has a defined size */
+        line-height: normal; /* Fixes potential zero-height text inheritance */
+        white-space: nowrap; /* Prevents the text from wrapping or squishing */
+        min-width: 150px; /* Provides a solid minimum width */
+        text-align: center;
+        transition: background-color 0.2s ease;
+    }
+
+    .action-button:hover {
+        background-color: #333;
+    }
+{% endstyle %}
+
+<div class="task-section-class">
+    <div class="image-section-class">
+        {% if section.settings.image_picker_setting %}
+            {{ section.settings.image_picker_setting | image_url: width: 500 | image_tag: class: 'main-image' }}
+        {% endif %}
+
+        {% if section.settings.logo_picker_setting %}
+            {% assign logo_class = 'logo pos-' | append: section.settings.logo_position %}
+            {{ section.settings.logo_picker_setting | image_url: width: 150 | image_tag: class: logo_class }}
+        {% endif %}
+    </div>
+    <div class="text-content" style="
+        text-align: {{section.settings.text_alignment}};
+        align-items: {% if section.settings.text_alignment == 'center' %}center{% elsif section.settings.text_alignment == 'right' %}flex-end{% else %}flex-start {% endif %};
+        font-size: {{section.settings.text_size}}px;">
+
+        {% if section.settings.doctors_name != blank %}
+            <div style="color: {{section.settings.doctor_color}}; font-weight: bold;">
+                {{ section.settings.doctors_name }}
+            </div>
+        {% endif %}
+
+        {% if section.settings.main_heading != blank %}
+            <h2 class="main-heading">
+                {{section.settings.main_heading}}
+            </h2>
+        {% endif %}
+
+        {% if section.settings.description_text != blank %}
+            <div class="description">
+                {{section.settings.description_text}}
+            </div>
+        {% endif %}
+
+        {% if section.settings.button_label != blank and section.settings.button_url != blank %}
+            <a href="{{section.settings.button_url}}" class="action-button">
+                {{section.settings.button_label}}
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Task Section",
+  "tag": "section",
+  "class": "task-section-class",
+  "settings": [
+    {
+        "type": "header",
+        "content": "Image Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_picker_setting",
+      "label": "Choose Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_picker_setting",
+      "label": "Logo"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo Placement",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top Left"
+        },
+        {
+          "value": "top-right",
+          "label": "Top Right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom Left"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom Right"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 14,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Base Text Size",
+      "default": 16
+    },
+    {
+      "type": "text",
+      "id": "doctors_name",
+      "label": "Doctors Name"
+    },
+    {
+      "type": "color",
+      "id": "doctor_color",
+      "label": "Doctor Color",
+      "default": "#aaffaa"
+    },
+    {
+      "type": "text",
+      "id": "main_heading",
+      "label": "Main Heading",
+      "default": "Veterinarian-Approved"
+    },
+    {
+      "type": "richtext",
+      "id": "description_text",
+      "label": "Description",
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "View Products"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Link"
+    },
+    // {
+    //   "type": "richtext",
+    //   "id": "rich_text_setting",
+    //   "label": "Doctor Name"
+    // },
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "task-section"
+    }
+  ]
+}
+{% endschema %}

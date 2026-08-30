@@ -1,0 +1,116 @@
+{% comment %}{% style %}
+    .section-title-color {
+        background-color: {{section.settings.bg_color}};
+    }
+{% endstyle %}
+
+
+{% assign text_color_settings = section.settings.font_color %}
+
+<h1 class="section-title-color" style="color: {{text_color_settings}}"> {{section.settings.title}} </h1>{% endcomment %}
+
+{% comment %}
+    To render blocks we use loop to get through each block and use case statement for different blocks type
+    to render.
+{% endcomment %}
+
+
+<div style="text-align: {{section.settings.text_alignment}} ">
+    {% for block in section.blocks %}
+
+        {% assign block_settings_bg_color = block.settings.bg_color %}
+        {% assign block_settings_font_color = block.settings.font_color %}
+
+        {% case block.type %}
+            {% when 'title' %}
+                <h1 style="background-color: {{block_settings_bg_color}}; color: {{block_settings_font_color}}"> Title </h1>
+            {% when 'subtitle' %}
+                <h3 style="background-color: {{block_settings_bg_color}}; color: {{block_settings_font_color}}"> Subtitle </h3>
+        {% endcase %}
+
+    {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "tuto-section",
+  "settings": [
+    {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text Alignment",
+        "default": "center",
+        "info": "aligns the text in the section",
+        "options": [
+            {
+                "value": "left",
+                "label": "Left",
+            },
+            {
+                "value": "center",
+                "label": "Center",
+            },
+            {
+                "value": "right",
+                "label": "Right"
+            }
+        ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Title",
+      "type": "title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "..."
+        },
+        {
+          "type": "color",
+          "id": "font_color",
+          "label": "Font Color",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#aaffaa"
+        }
+      ]
+    },
+    {
+      "name": "Subtitle",
+      "type": "subtitle",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "..."
+        },
+        {
+          "type": "color",
+          "id": "font_color",
+          "label": "Font Color",
+          "default": "#0000aa"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background Color",
+          "default": "#aaffaa"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "tuto-section",
+    }
+  ]
+}
+{% endschema %}

@@ -27,6 +27,11 @@
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
+
+  {% comment %}
+  My Badge CSS:
+  {% endcomment %}
+  {{ 'badge-tuto.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 {%- if card_product and card_product != empty -%}
   {%- liquid
@@ -127,6 +132,15 @@
               </h3>
             </div>
             <div class="card__badge {{ settings.badge_position }}">
+                {% assign labels = card_product.metafields.custom.product_label.value %}
+                  {% for label in labels %}
+                    <span
+                      class="badge"
+                      style="color: {{ label.text_color.value }}; background-color: {{ label.background_color.value }};"
+                    >
+                      {{ label.label.value }}
+                    </span>
+                  {% endfor %}
               {%- if card_product.available == false -%}
                 <span
                   id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
@@ -551,6 +565,7 @@
             {% endif %}
           {% endif %}
           <div class="card__badge {{ settings.badge_position }}">
+
             {%- if card_product.available == false -%}
               <span
                 id="Badge-{{ section_id }}-{{ card_product.id }}"
