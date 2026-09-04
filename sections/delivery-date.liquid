@@ -1,0 +1,4 @@
+{%- assign metafield_variant_product = product.selected_or_first_available_variant.metafields.custom.delivery_date -%}
+{%- if metafield_variant_product -%}
+<p> {{metafield_variant_product}} </p>
+{%- endif -%}

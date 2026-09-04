@@ -125,6 +125,13 @@ if (!customElements.get('product-info')) {
             this.pendingRequestUrl = null;
             const html = new DOMParser().parseFromString(responseText, 'text/html');
             callback(html);
+
+            const newVariantId = html.querySelector("[name='id']").value;
+            document.dispatchEvent(new CustomEvent("variant:updated", {
+              detail: {
+                id: newVariantId
+              }
+            }))
             // set focus to last clicked option value
             document.querySelector(`#${targetId}`)?.focus();
           })

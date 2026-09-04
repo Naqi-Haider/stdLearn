@@ -1,0 +1,30 @@
+{% comment %}
+<div style="background: #f4f4f4; padding: 10px; margin: 10px 0; font-family: monospace; font-size: 12px;">
+  <p><strong>Metaobject Reference:</strong> {{ product.metafields.custom.gift_wrap_option.value | json }}</p>
+  <p><strong>Variant Reference:</strong> {{ product.metafields.custom.gift_wrap_option.value.product_variant.value | json }}</p>
+</div>
+
+
+<script src="{{'gift-wrap-service.js' | asset_url}}" defer="defer"></script>
+
+{%  assign gift_wrap_metaobject = product.metafields.custom.gift_wrap_option.value %}
+
+{% if gift_wrap_metaobject != blank and gift_wrap_metaobject.product_variant.value != blank %}
+    {% assign gift_wrap_variant = gift_wrap_metaobject.product_variant.value %}
+
+    <div class="gift-wrap-option" style="margin: 10px 0px;">
+        <label style="
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                cursor: pointer;">
+            <input
+                type="checkbox"
+                id="enable_gift_wrap"
+                data-variant-id="{{gift_wrap_variant.id}}"
+            >
+        </label>
+
+        <span>{{gift_wrap_metaobject.title | default: "Add gift wrapping" }} (+ {{gift_wrap_variant.price | money}})</span>
+    </div>
+{% endif %}{% endcomment %}

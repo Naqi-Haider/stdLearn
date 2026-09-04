@@ -1,0 +1,9 @@
+{%-if product.selected_or_first_available_variant.metafields.custom.delivery_date != blank -%}
+    <p>Expected Delivery: {{product.selected_or_first_available_variant.metafields.custom.delivery_date}} </p>
+{%-endif-%}
+
+{%- comment -%}
+
+<h1> {{product.title}} </h1>
+<img src=" {{product.featured_image | image_url: width: 300, height: 500 }}" alt=" {{product.title}} ">
+{%- endcomment -%}

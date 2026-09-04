@@ -61,6 +61,8 @@
         {%- endif -%}
 
         <div class="product-form__buttons">
+            {% comment %} To render gift wrap snippet reference. {% endcomment %}
+            {% comment %}{%- render 'gift-wrap-service', product: product -%}{% endcomment %}
           {%- liquid
             assign check_against_inventory = true
             if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'

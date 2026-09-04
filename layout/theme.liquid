@@ -334,7 +334,20 @@
 
     {% sections 'header-group' %}
 
-    <h2> Hello from zed. </h2>
+    <script>
+      class MyCustomElement extends HTMLElement {
+        constructor(){
+          super();
+          console.log("Constructor Call");
+        }
+        connectedCallback(){
+          console.log("Attached to DOM");
+        }
+      }
+      customElements.define("my-custom-element", MyCustomElement);
+    </script>
+
+    <my-custom-element></my-custom-element>
 
     <prev>
         product.title: {{ product.title }}

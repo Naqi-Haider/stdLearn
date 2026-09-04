@@ -99,3 +99,32 @@
     </script>
   </variant-selects>
 {%- endunless -%}
+
+{% comment %}Section rendering API Section: {% endcomment %}
+<div id="expected-delivery">
+    {%- assign metafield_variant_product = product.selected_or_first_available_variant.metafields.custom.delivery_date -%}
+    {%- if metafield_variant_product -%}
+    <p>Expected Delivery: {{metafield_variant_product}}</p>
+    {%- endif -%}
+</div>
+
+
+{%- comment -%} This is log for getting the URL on selection of variant
+It would get us variant id, section id (which is already present) and productURL
+{% endcomment %}
+<script>
+const productUrl = "/products/{{ product.handle }}";
+document.addEventListener("variant:updated", (e) => {
+    const variant = e.detail.id;
+    const url = `${productUrl}?variant=${variant}&section_id=test-section-rendering-api`;
+    console.log(url);
+
+    fetch(url).then(res => res.text()).then(data => {
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(data, "text/html");
+      const newSection = dom.getElementById("shopify-section-test-section-rendering-api").innerHTML;
+      document.getElementById("expected-delivery").innerHTML = newSection;
+      console.log(newSection)
+    })
+})
+</script>
